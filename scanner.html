@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Live Scanner</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+</head>
+<body>
+
+<nav>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="scanner.html">Live Scanner</a></li>
+<li><a href="how.html">How It Works</a></li>
+<li><a href="categories.html">Categories</a></li>
+<li><a href="about.html">About</a></li>
+</ul>
+</nav>
+
+<section>
+<h2>🔍 Real-Time Waste Detection</h2>
+<p>
+Click the button below to activate your webcam and allow the AI model 
+to continuously analyze and classify waste objects in front of the camera.
+</p>
+
+<button onclick="init()">Start Camera</button>
+
+<div id="webcam-container"></div>
+<div class="prediction-box" id="prediction-box"></div>
+<div class="status" id="status">Waiting for camera...</div>
+</section>
+
+<footer>
+<div class="footer-container">
+<div class="footer-box">
+<h3>About Project</h3>
+<p>Smart AI-based waste classification for sustainable waste management.</p>
+</div>
+<div class="footer-box">
+<h3>Quick Links</h3>
+<p><a href="scanner.html">Live Scanner</a></p>
+<p><a href="categories.html">Categories</a></p>
+</div>
+<div class="footer-box">
+<h3>Technology Used</h3>
+<p>HTML, CSS, JavaScript</p>
+<p>TensorFlow.js</p>
+<p>Teachable Machine</p>
+</div>
+</div>
+<div class="footer-bottom">
+© 2026 AI Waste Segregation Project
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+<script src="script.js"></script>
+</body>
+</html>
