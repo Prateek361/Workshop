@@ -1,41 +1,56 @@
 /***********************************************************
-  TEACHABLE MACHINE MODEL (LOCAL DOWNLOADED VERSION)
+  TEACHABLE MACHINE MODEL (GITHUB DEPLOYMENT SAFE VERSION)
 ************************************************************/
 
 let model, webcam, labelContainer, maxPredictions;
 
+// Main function (make sure button calls THIS name)
 async function initScanner() {
 
-    if (!document.getElementById("webcam-container")) return;
+    // Prevent running on pages without webcam container
+    const container = document.getElementById("webcam-container");
+    if (!container) return;
 
-    // 👇 Local model folder
-    const URL = "model/";
+    try {
 
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
+        // IMPORTANT: relative path for GitHub
+        const URL = "./model/";
 
-    // Load model from local files
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
 
-    // Setup webcam
-    const flip = true;
-    webcam = new tmImage.Webcam(350, 350, flip);
-    await webcam.setup();
-    await webcam.play();
-    window.requestAnimationFrame(loop);
+        // Load model
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
 
-    document.getElementById("webcam-container").appendChild(webcam.canvas);
+        // Setup webcam
+        const flip = true;
+        webcam = new tmImage.Webcam(350, 350, flip);
 
-    labelContainer = document.getElementById("prediction");
+        await webcam.setup();   // Ask permission
+        await webcam.play();
+
+        window.requestAnimationFrame(loop);
+
+        container.innerHTML = ""; // clear previous canvas
+        container.appendChild(webcam.canvas);
+
+        labelContainer = document.getElementById("prediction");
+
+    } catch (error) {
+        console.error("Initialization Error:", error);
+        alert("Error loading model or webcam. Check console.");
+    }
 }
 
+// Continuous loop
 async function loop() {
     webcam.update();
     await predict();
     window.requestAnimationFrame(loop);
 }
 
+// Prediction function
 async function predict() {
 
     const prediction = await model.predict(webcam.canvas);
@@ -50,12 +65,10 @@ async function predict() {
 
     const confidence = (highest.probability * 100).toFixed(2);
 
-    labelContainer.innerHTML = `
-        <h2>${highest.className}</h2>
-        <p>Confidence: ${confidence}%</p>
-    `;
+    if (labelContainer) {
+        labelContainer.innerHTML = `
+            <h2>${highest.className}</h2>
+            <p>Confidence: ${confidence}%</p>
+        `;
+    }
 }
-
-window.addEventListener("load", () => {
-    initScanner();
-});
