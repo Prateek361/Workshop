@@ -13,8 +13,8 @@ async function initScanner() {
 
     try {
 
-        // IMPORTANT: relative path for GitHub
-        const URL = "./model/";
+        
+        const URL = "/waste-segregation-ml/model/";
 
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
@@ -72,3 +72,4 @@ async function predict() {
         `;
     }
 }
+
